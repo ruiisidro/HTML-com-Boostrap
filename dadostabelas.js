@@ -121,7 +121,7 @@ var mydata = [{
 
 
 $(function(){
-    $('#mytable').bootstrapTable({
+    $('#table').bootstrapTable({
         data: mydata
     });
 });
