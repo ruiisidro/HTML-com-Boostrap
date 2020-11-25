@@ -10,30 +10,32 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
 
-function clearForm(){
-    $('form').get(0).reset() // or $('form')[0].reset()
-}
-</script>
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+
+        function clearForm() {
+            $('form').get(0).reset() // or $('form')[0].reset()
+        }
+    </script>
 </head>
 
 <body>
@@ -42,17 +44,17 @@ function clearForm(){
         <form class="needs-validation" novalidate>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="inputNome2">Nome</label>
+                    <label for="inputNome">Nome</label>
                     <input type="text" class="form-control" id="inputNome" required>
                     <div class="valid-feedback">
                         Perfeito!
                     </div>
                     <div class="invalid-feedback">
-                       O nome é de preenchimento obrigatório.
-                      </div>
+                        O nome é de preenchimento obrigatório.
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputSobrenome2">Sobrenome</label>
+                    <label for="inputSobrenome">Sobrenome</label>
                     <input type="text" class="form-control" id="inputSobrenome" required>
                 </div>
             </div>
@@ -75,6 +77,7 @@ function clearForm(){
                     <textarea class="form-control" id="textareaMorada" rows="3" required></textarea>
                 </div>
             </div>
+
             <div class="form-row ">
                 <div class="form-group col-md-12">
                     <label for="textareaMorada2">Morada 2</label>
@@ -110,8 +113,6 @@ function clearForm(){
                         <label class="form-check-label" for="inlineRadio2">Masculino</label>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="form-row ">
@@ -122,7 +123,6 @@ function clearForm(){
             </div>
 
         </form>
-
     </div>
 
 
