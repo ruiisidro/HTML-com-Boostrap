@@ -17,7 +17,10 @@
             window.addEventListener('load', function () {
                 // Fetch all the forms we want to apply custom Bootstrap validation styles to
                 var forms = document.getElementsByClassName('needs-validation');
+<<<<<<< HEAD
 
+=======
+>>>>>>> cdcf554b1b7e1447c6671e1bf28b392971d226df
                 // Loop over them and prevent submission
                 var validation = Array.prototype.filter.call(forms, function (form) {
                     form.addEventListener('submit', function (event) {
@@ -31,9 +34,13 @@
             }, false);
         })();
 
-
         function clearForm() {
             $('form').get(0).reset() // or $('form')[0].reset()
+        }
+
+        function rangeDefinido() {
+
+            $('#percentagemEscolhida').text($('#formControlRange').val());
         }
     </script>
 </head>
@@ -114,6 +121,20 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="form-row ">
+                <div class="form-group col-md-6">
+                    <label for="formControlRange">Com que percentagem recomendaria o Bootstrap a terceiros?</label>
+                    <input type="range" class="form-control-range" id="formControlRange" onChange="rangeDefinido()"
+                        min="0" max="100">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <h1 id="percentagemEscolhida" class="alert-success"></h1>
+                </div>
+            </div>
+
 
             <div class="form-row ">
                 <div class="col-auto">
