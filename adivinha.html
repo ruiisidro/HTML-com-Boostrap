@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <title>Formulário</title>
+
+    <meta charset="8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <h1>jogo da adivinha</h1>
+            </div>
+            <div class="col-2">
+                <b>nível dificuldade <span id="nivelDificuldadeBartxt">NaN</span></b>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <h2 id="mensagensDoComputador">Olá quero jogar contigo! Escolhe um nível de dificuldade...</h2>
+            </div>
+
+            <div class="col-6">
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        nível de dificuldade
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" type="button" onclick="setNivel(0)">básico</button>
+                        <button class="dropdown-item" type="button" onclick="setNivel(1)">intermédio</button>
+                        <button class="dropdown-item" type="button" onclick="setNivel(2)">profissional</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <input type="text" class="form-control" id="tentativa">
+            </div>
+            <div class="col-1">
+                <button id="btnJogar" type="button" class="btn btn-primary" onclick="jogar()">
+                    jogar <span class="badge badge-light" id="tentativaCount">NaN</span>
+                </button>
+            </div>
+            <div class="col-3">
+                <span id="tentativasFeitas"></span>
+            </div>
+        </div>
+
+        <div class="row d-none" id="screenParabens">
+            <div class="col-12">
+                <h2>Parabéns!</h2>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_iwywjphw.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+                <button type="button" class="btn btn-primary" onclick="gameReset()">
+                    reset!
+                </button>
+            </div>
+        </div>
+
+        <div class="row d-none" id="screenGameOver">
+            <div class="col-12">
+                <h2>GAME OVER!</h2>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<lottie-player src="https://assets10.lottiefiles.com/packages/lf20_hliaii.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+                <h3 id="revelaNumerPensado"></h3>
+                <button type="button" class="btn btn-primary" onclick="gameReset()">
+                    reset!
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+ 
+    <script>
+        var nivelDificuldade;
+        var totalTentativas, numeroSorteado;
+        var tentativasFeitas = []
+
+        function gameReset() {
+            nivelDificuldade = null;
+            totalTentativas = null;
+            numeroSorteado = null;
+            tentativasFeitas = [];
+            $("#mensagensDoComputador").text("Olá quero jogar contigo! Escolhe um nível de dificuldade...");
+            $("#tentativa").val(null);
+            $("#tentativaCount").text("NaN");
+            $("#btnJogar").prop("disabled", false);
+            $("#nivelDificuldadeBartxt").text("NaN");
+            $("#screenParabens").addClass("d-none");
+            $("#screenGameOver").addClass("d-none");
+            $("#tentativasFeitas").text("");
+        }
+
+        function setNivel(nivel) {
+            var limiteMax = 10;
+            nivelDificuldade = nivel;
+            $("#nivelDificuldadeBartxt").text(nivelDificuldade);
+
+            switch (nivelDificuldade) {
+                case 0:
+                    totalTentativas = 3;
+                    limiteMax = 10;
+                    break;
+                case 1:
+                    totalTentativas = 3;
+                    limiteMax = 100;
+                    break;
+                default:
+                    totalTentativas = 6;
+                    limiteMax = 100000;
+                    break;
+            }
+            $("#tentativaCount").text(totalTentativas);
+
+            sorteiaNumero(limiteMax);
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+
+        function sorteiaNumero(limiteMax) {
+            numeroSorteado = getRandomInt(limiteMax);
+            $("#mensagensDoComputador").text("Acabei de pensar num número entre 0 e " + limiteMax + ", consegues adivinhar qual foi?");
+        }
+
+        function jogar() {
+            var tentativa = $("#tentativa").val();
+
+            tentativasFeitas.push(tentativa);
+
+            $("#tentativasFeitas").text(tentativasFeitas);
+
+            if (tentativa == numeroSorteado) {
+                $("#screenParabens").removeClass("d-none");
+                $("#btnJogar").prop("disabled", true);
+            }
+            else {
+                if (numeroSorteado > tentativa) {
+                    $("#mensagensDoComputador").text("o meu número é maior que o teu!");
+                }
+                else {
+                    $("#mensagensDoComputador").text("o meu número é menor que o teu!");
+                }
+                $("#tentativaCount").text(--totalTentativas);
+                if (totalTentativas == 0) {
+                    $("#screenGameOver").removeClass("d-none");
+                    $("#btnJogar").prop("disabled", true);
+                    $("#revelaNumerPensado").text("Eu tinha pensado em: " + numeroSorteado);
+                }
+            }
+            $("#tentativa").val(null).focus();
+        }
+    </script>
+</body>
+
+</html>

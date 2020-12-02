@@ -3,7 +3,7 @@
 
     //Evento change do campo Preço unitário
     $('.price').change(function () {
-        
+        debugger;
 
         //Pesquisa o tr da linha do controlo alterado
         var x = $(this).parentsUntil("tbody", "tr");
@@ -15,8 +15,8 @@
         var total = x.find(".total");
 
         //atribui valor à seleccção 
-        total.val($(this).val() * qtd.val());
-    });
+        total.val( $(this).val() * qtd.val() );
+    }); 
      
 
 })();
