@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <title>Dice race</title>
+
+    <meta charset="8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1 class="display-1">Dice Race</h1>
+        <p class="lead">
+            <i>Dice race</i> é uma emocionante corrida de dados! Há 6 aguerridos pilotos em pista, cada um avança a alta velocidade para a meta a cada malabarismo do dado.
+          </p>
+
+
+        <div class="row">
+            <div class="col-12">
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>1</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>4</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>5</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>6</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <button class="btn btn-lg btn-primary btn-block" onclick="rollDice()">atirar o dado!</button>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <lottie-player class="diceAnimation d-none" background="transparent" speed="1"
+                    style="width: 300px; height: 300px;" autoplay mode="normal"></lottie-player>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <script>
+        var rolledDice;
+        var diceImages = ['https://assets1.lottiefiles.com/packages/lf20_60EFV2.json',
+            'https://assets1.lottiefiles.com/packages/lf20_04mcdN.json',
+            'https://assets1.lottiefiles.com/packages/lf20_C2XuqK.json',
+            'https://assets1.lottiefiles.com/packages/lf20_lxi3U5.json',
+            'https://assets1.lottiefiles.com/packages/lf20_5GDwcV.json',
+            'https://assets1.lottiefiles.com/packages/lf20_QHxOUq.json'
+        ];
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function rollDice() {
+            rolledDice = getRandomInt(1, 6);
+            console.log(rolledDice);
+            showDice();
+        }
+
+        function showDice() {
+            var referenceDice = $("lottie-player");
+            const player = document.querySelector("lottie-player");
+            referenceDice.removeClass("d-none");
+            player.load(diceImages[rolledDice - 1]);
+
+            $("button").prop("disabled", true);
+
+            setTimeout(function () {
+                trackMove();
+                $("lottie-player").addClass("d-none");
+                $("button").prop("disabled", false);
+            }, 5000);
+        }
+
+        function trackMove() {
+            var linha = $($("tr")[rolledDice - 1]);
+            linha.find("td").each(function (index) {
+                if ($(this).text() == "") {
+                    $(this).text("X");
+                    checkWinner();
+                    return false;
+                }
+            });
+        }
+
+        function checkWinner(){
+            var linha = $($("tr")[rolledDice - 1]);
+            if(linha.find("td:contains('X')").length == 6){
+                linha.addClass("table-success");
+                $("button").prop("disabled", true);
+            }
+        }
+
+    </script>
+</body>
+
+</html>
